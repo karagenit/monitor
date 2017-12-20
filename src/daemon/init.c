@@ -33,8 +33,8 @@ int main(int argc, char* argv[])
     close(STDOUT_FILENO);
     close(STDERR_FILENO);
 
-    sleep(10); // TODO: make this 1 sec
+    sleep(1);
 
     // Run main daemon process
-    //monitor("/dev/");
+    monitor("/dev/");
 }

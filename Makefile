@@ -1,5 +1,5 @@
 D_OUT=bin/init
-D_FILES=src/daemon/init.c
+D_FILES=src/daemon/init.c src/daemon/monitor.c
 
 U_OUT=bin/read
 U_FILES=src/user/read.c
