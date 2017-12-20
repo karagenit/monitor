@@ -1,13 +1,16 @@
-INIT_OUT=bin/init
-INIT_FILES=src/init.c
-COMM_OUT=bin/comm
+D_OUT=bin/init
+D_FILES=src/daemon/init.c
+
+U_OUT=bin/read
+U_FILES=src/user/read.c
 
 main: build
 
-build: build_init build_comm
+build: build_daemon build_user
 
-build_init: $(INIT_FILES)
-	gcc -o $(INIT_OUT) $(INIT_FILES)
+build_daemon: $(D_FILES)
+	gcc -o $(D_OUT) $(D_FILES)
 
-build_comm:
+build_user: $(U_FILES)
+	gcc -o $(U_OUT) $(U_FILES)
 	
