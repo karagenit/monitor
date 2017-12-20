@@ -1,4 +1,9 @@
-int monitor(char* dir)
+#include "monitor.h"
+
+int monitor(char* dir, int delay)
 {
-    while(1);
+    while(1)
+    {
+        sleep(delay);
+    }
 }

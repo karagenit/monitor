@@ -1,6 +1,11 @@
 #ifndef MONITOR_H
 #define MONITOR_H
 
-int monitor(char* dir);
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+int monitor(char* dir, int delay);
 
 #endif

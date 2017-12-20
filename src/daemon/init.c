@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
 
     //unmask the file mode
     umask(0);
+    chdir("/"); // TODO: figure out the proper working directory
 
     sid = setsid();
     if(sid < 0)
@@ -36,5 +37,5 @@ int main(int argc, char* argv[])
     sleep(1);
 
     // Run main daemon process
-    monitor("/dev/");
+    monitor("/dev/", 60);
 }
