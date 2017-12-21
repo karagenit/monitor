@@ -15,13 +15,20 @@ int main(int argc, char *argv[])
     server.sun_family = AF_UNIX;
     strcpy(server.sun_path, SOCKET_PATH);
 
-    if (connect(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un)) < 0) {
+    int connect_err = connect(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
+
+    if (connect_err < 0) {
         close(sock);
         perror("connecting stream socket");
         exit(1);
     }
-    if (write(sock, DATA, sizeof(DATA)) < 0)
+
+    int write_err = write(sock, DATA, sizeof(DATA));
+
+    if (write_err < 0) {
         perror("writing on stream socket");
+    }
+
     close(sock);
 }
 
