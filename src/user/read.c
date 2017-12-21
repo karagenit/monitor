@@ -4,23 +4,16 @@ int main(int argc, char *argv[])
 {
     int sock;
     struct sockaddr_un server;
-    char buf[1024];
-
-
-    if (argc < 2) {
-        printf("usage:%s <pathname>", argv[0]);
-        exit(1);
-    }
-
+    char buf[BUF_SIZE];
 
     sock = socket(AF_UNIX, SOCK_STREAM, 0);
     if (sock < 0) {
         perror("opening stream socket");
         exit(1);
     }
-    server.sun_family = AF_UNIX;
-    strcpy(server.sun_path, argv[1]);
 
+    server.sun_family = AF_UNIX;
+    strcpy(server.sun_path, SOCKET_PATH);
 
     if (connect(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un)) < 0) {
         close(sock);

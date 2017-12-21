@@ -4,7 +4,7 @@ int monitor(char* dir, int delay)
 {
     int sock, msgsock, rval;
     struct sockaddr_un server;
-    char buf[1024];
+    char buf[BUF_SIZE];
     FILE *logfile = NULL;
 
     logfile = fopen("log.txt", "w+");
@@ -17,7 +17,7 @@ int monitor(char* dir, int delay)
     }
 
     server.sun_family = AF_UNIX;
-    strcpy(server.sun_path, NAME);
+    strcpy(server.sun_path, SOCKET_PATH);
 
     int bind_err = bind(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
 
@@ -40,7 +40,7 @@ int monitor(char* dir, int delay)
             bzero(buf, sizeof(buf));
 
             // Read bytes into buf, rval is # of bytes read
-            rval = read(msgsock, buf, 1024);
+            rval = read(msgsock, buf, BUF_SIZE);
 
             if (rval < 0) {
                 // Error reading value
@@ -57,7 +57,7 @@ int monitor(char* dir, int delay)
     //}
 
     close(sock);
-    unlink(NAME);
+    unlink(SOCKET_PATH);
 
     fclose(logfile);
 
