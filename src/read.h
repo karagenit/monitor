@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "../config.h"
+#include "config.h"
 
 #define DATA "Half a league, half a league . . ."
 

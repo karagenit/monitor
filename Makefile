@@ -1,8 +1,8 @@
 D_OUT=bin/init
-D_FILES=src/daemon/init.c src/daemon/monitor.c
+D_FILES=src/init.c src/monitor.c
 
 U_OUT=bin/read
-U_FILES=src/user/read.c
+U_FILES=src/read.c
 
 main: build
 

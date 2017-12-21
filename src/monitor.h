@@ -10,7 +10,7 @@
 #include <sys/un.h>
 #include <sys/stat.h>
 
-#include "../config.h"
+#include "config.h"
 
 int monitor(char* dir, int delay);
 
