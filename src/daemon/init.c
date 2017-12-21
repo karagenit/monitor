@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 
     //unmask the file mode
     umask(0);
-    chdir("/"); // TODO: figure out the proper working directory
+    //chdir("/"); // TODO: figure out the proper working directory
 
     sid = setsid();
     if(sid < 0)
