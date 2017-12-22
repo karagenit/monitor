@@ -10,8 +10,6 @@
 
 #include "config.h"
 
-#define DATA "Half a league, half a league . . ."
-
 int main(int argc, char *argv[]);
 
 #endif

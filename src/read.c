@@ -23,10 +23,13 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    int write_err = write(sock, DATA, sizeof(DATA));
+    bzero(buf, BUF_SIZE);
+    int bytes_read = read(sock, buf, BUF_SIZE);
 
-    if (write_err < 0) {
-        perror("writing on stream socket");
+    if (bytes_read < 0) {
+        perror("reading from socket");
+    } else if (bytes_read > 0) {
+        printf(buf);
     }
 
     close(sock);
