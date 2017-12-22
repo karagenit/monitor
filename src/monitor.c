@@ -5,9 +5,6 @@ int monitor(char* dir, int delay)
     int sock, msgsock, rval;
     struct sockaddr_un server;
     char buf[BUF_SIZE];
-    FILE *logfile = NULL;
-
-    logfile = fopen("log.txt", "w+");
 
     sock = socket(AF_UNIX, SOCK_STREAM, 0);
 
@@ -47,8 +44,6 @@ int monitor(char* dir, int delay)
 
     close(sock);
     unlink(SOCKET_PATH);
-
-    fclose(logfile);
 
     //sleep(delay); //eventually this will be used to monitor the directory at intervals
 }
