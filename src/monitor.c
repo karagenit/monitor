@@ -2,18 +2,18 @@
 
 int monitor(char* dir, int delay)
 {
-    int server_sock = setup_socket();
-    char *stream_buf;
-    size_t stream_size;
-    FILE *diff_stream = open_memstream(&stream_buf, &stream_size);
+    struct Monitor monitor;
+    memset(monitor.dir, 0, DIR_SIZE);
+    strncpy(monitor.dir, dir, DIR_SIZE - 1);
+
+    setup_socket(&monitor);
+
+    setup_stream(&monitor);
 
     while(1) {
-        check_directory(dir);
+        check_directory(&monitor);
 
-        fprintf(diff_stream, "hi\n");
-        fflush(diff_stream);
-
-        check_socket(server_sock, diff_stream);
+        check_socket(&monitor);
 
         // TODO: don't hang main thread like this, instead check constantly for socket requests
         //sleep(delay);
@@ -21,13 +21,12 @@ int monitor(char* dir, int delay)
         break; //temporary
     }
 
-    fclose(diff_stream);
-    free(stream_buf);
+    cleanup_stream(&monitor);
 
-    cleanup_socket(server_sock);
+    cleanup_socket(&monitor);
 }
 
-int setup_socket()
+int setup_socket(struct Monitor *monitor)
 {
     int sock = socket(AF_UNIX, SOCK_STREAM, 0); //Create unix socket, type stream, no params
 
@@ -45,39 +44,47 @@ int setup_socket()
 
     listen(sock, 1); //listen for connections, allow max 1 to be queued
 
-    return sock;
+    monitor->socket = sock;
 }
 
-int cleanup_socket(int socket)
+int setup_stream(struct Monitor *monitor)
 {
-    close(socket);
+    monitor->stream = open_memstream(&(monitor->stream_buf), &(monitor->stream_size));
+}
+
+int cleanup_socket(struct Monitor *monitor)
+{
+    close(monitor->socket);
     unlink(SOCKET_PATH);
 }
 
-int check_directory(char *dir)
+int cleanup_stream(struct Monitor *monitor)
 {
-
+    fclose(monitor->stream);
+    free(monitor->stream_buf);
 }
 
-int check_socket(int socket, FILE *stream)
+int check_directory(struct Monitor *monitor)
+{
+    fprintf(monitor->stream, "Hello\n");
+    fflush(monitor->stream);
+}
+
+int check_socket(struct Monitor *monitor)
 {
     //check socket connection
     // TODO: non-blocking check
-    int sock_connection = accept(socket, 0, 0);
+    int connection = accept(monitor->socket, 0, 0);
 
-    if (sock_connection < 0) {
+    if (connection < 0) {
         //connect error
     } else {
-        char stream_data[BUF_SIZE];
-        //note this should be the client's BUF_SIZE, as that value
-        //is the max that can be read... this can be larger than the # of bytes
-        //actually in the stream, as it won't block
-        fread(stream_data, 1, sizeof(stream_data), stream); //TODO: check return value
-        if (write(sock_connection, stream_data, sizeof(stream_data)) < 0) {
+        fread(monitor->read_buf, 1, BUF_SIZE, monitor->stream); //TODO: check return value
+        if (write(connection, monitor->read_buf, BUF_SIZE) < 0) { //TODO: sizeof not BUF_S?
             //write error
         } 
         // TODO: how do we handle there being more data to write than BUF_SIZE?
     }
 
-    close(sock_connection);
+    close(connection);
 }
