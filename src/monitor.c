@@ -34,6 +34,7 @@ int monitor(char* dir, int delay)
     fprintf(logfile, "Bound!");
 
     ssize_t send_err = sendto(sock, "Hello", sizeof("Hello"), 0, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
+    //ssize_t send_err = write(sock, "Hello", sizeof("Hello"));
 
     if (send_err < 0) {
         fprintf(logfile, "Send");
