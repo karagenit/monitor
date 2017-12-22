@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
     struct sockaddr_un server;
     char buf[BUF_SIZE];
 
-    sock = socket(AF_UNIX, SOCK_STREAM, 0);
+    sock = socket(AF_UNIX, SOCK_DGRAM, 0);
     if (sock < 0) {
         perror("opening stream socket");
         exit(1);
@@ -15,22 +15,17 @@ int main(int argc, char *argv[])
     server.sun_family = AF_UNIX;
     strcpy(server.sun_path, SOCKET_PATH);
 
-    int connect_err = connect(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
+    socklen_t addrlen = sizeof(struct sockaddr_un);
 
-    if (connect_err < 0) {
-        close(sock);
-        perror("connecting stream socket");
-        exit(1);
+    printf("Reading...\n");
+
+    socklen_t recv_err = recvfrom(sock, buf, BUF_SIZE, 0, (struct sockaddr *) &server, &addrlen);
+
+    if(recv_err < 0) {
+        perror("reading datagram");
     }
 
-    bzero(buf, BUF_SIZE);
-    int bytes_read = read(sock, buf, BUF_SIZE);
-
-    if (bytes_read < 0) {
-        perror("reading from socket");
-    } else if (bytes_read > 0) {
-        printf(buf);
-    }
+    printf(buf);
 
     close(sock);
 }
