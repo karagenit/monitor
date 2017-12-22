@@ -3,16 +3,26 @@
 int monitor(char* dir, int delay)
 {
     int server_sock = setup_socket();
+    char *stream_buf;
+    size_t stream_size;
+    FILE *diff_stream = open_memstream(&stream_buf, &stream_size);
 
     while(1) {
         check_directory(dir);
-        check_socket(server_sock);
+
+        fprintf(diff_stream, "hi\n");
+        fflush(diff_stream);
+
+        check_socket(server_sock, diff_stream);
 
         // TODO: don't hang main thread like this, instead check constantly for socket requests
         //sleep(delay);
 
         break; //temporary
     }
+
+    fclose(diff_stream);
+    free(stream_buf);
 
     cleanup_socket(server_sock);
 }
@@ -49,7 +59,7 @@ int check_directory(char *dir)
 
 }
 
-int check_socket(int socket)
+int check_socket(int socket, FILE *stream)
 {
     //check socket connection
     // TODO: non-blocking check
@@ -58,7 +68,9 @@ int check_socket(int socket)
     if (sock_connection < 0) {
         //connect error
     } else {
-        if (write(sock_connection, "hi", sizeof("hi")) < 0) {
+        char stream_data[2];
+        fread(stream_data, 1, sizeof(stream_data), stream);
+        if (write(sock_connection, stream_data, sizeof(stream_data)) < 0) {
             //write error
         }
     }

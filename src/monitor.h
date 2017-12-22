@@ -16,6 +16,6 @@ int monitor(char* dir, int delay);
 int setup_socket();
 int cleanup_socket();
 int check_directory(char *dir);
-int check_socket(int socket);
+int check_socket(int socket, FILE *stream);
 
 #endif
