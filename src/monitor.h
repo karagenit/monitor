@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <dirent.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
@@ -13,10 +14,11 @@
 #include "config.h"
 
 struct Monitor {
-    char dir[DIR_SIZE];
+    char path[DIR_SIZE];
     char *stream_buf;
     size_t stream_size;
     FILE *stream;
+    DIR *directory;
     char read_buf[BUF_SIZE];
     int socket;
 };

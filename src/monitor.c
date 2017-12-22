@@ -3,8 +3,8 @@
 int monitor(char* dir, int delay)
 {
     struct Monitor monitor;
-    memset(monitor.dir, 0, DIR_SIZE);
-    strncpy(monitor.dir, dir, DIR_SIZE - 1);
+    memset(monitor.path, 0, DIR_SIZE);
+    strncpy(monitor.path, dir, DIR_SIZE - 1);
 
     setup_socket(&monitor);
 
@@ -66,7 +66,15 @@ int cleanup_stream(struct Monitor *monitor)
 
 int check_directory(struct Monitor *monitor)
 {
-    fprintf(monitor->stream, "Hello\n");
+    monitor->directory = opendir(monitor->path);
+
+    if (monitor->directory) {
+        fprintf(monitor->stream, readdir(monitor->directory)->d_name);
+        closedir(monitor->directory);
+    } else {
+        //directory error
+    }
+
     fflush(monitor->stream);
 }
 
@@ -79,6 +87,7 @@ int check_socket(struct Monitor *monitor)
     if (connection < 0) {
         //connect error
     } else {
+        //TODO: zero the read buffer? or move it out of monitor?
         fread(monitor->read_buf, 1, BUF_SIZE, monitor->stream); //TODO: check return value
         if (write(connection, monitor->read_buf, BUF_SIZE) < 0) { //TODO: sizeof not BUF_S?
             //write error
