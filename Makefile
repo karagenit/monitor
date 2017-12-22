@@ -11,7 +11,15 @@ build:
 	gcc -o $(U_OUT) -g $(U_FILES)
 
 test:
+	bin/init
+	sleep 1
+	bin/read
+
+check:
 	valgrind --tool=memcheck --leak-check=yes bin/init
 
 debug:
 	gdb bin/init
+
+clean:
+	rm bin/*
