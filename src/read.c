@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
 
     printf("Reading...\n");
 
-//    socklen_t recv_err = recvfrom(sock, buf, BUF_SIZE, 0, NULL, NULL);
-    ssize_t recv_err = read(sock, buf, BUF_SIZE);
+    socklen_t recv_err = recvfrom(sock, buf, BUF_SIZE, 0, NULL, NULL);
+    // ssize_t recv_err = read(sock, buf, BUF_SIZE);
 
     if(recv_err < 0) {
         perror("reading datagram");

@@ -1,4 +1,5 @@
 #include "monitor.h"
+#include <errno.h>
 
 int monitor(char* dir, int delay)
 {
@@ -33,11 +34,11 @@ int monitor(char* dir, int delay)
 
     fprintf(logfile, "Bound!");
 
-    ssize_t send_err = sendto(sock, "Hello", sizeof("Hello"), 0, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
-    //ssize_t send_err = write(sock, "Hello", sizeof("Hello"));
+    //ssize_t send_err = sendto(sock, "Hello", sizeof("Hello"), 0, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
+    ssize_t send_err = write(sock, "Hello", sizeof("Hello"));
 
     if (send_err < 0) {
-        fprintf(logfile, "Send");
+        fprintf(logfile, "Send %d", errno);
         exit(1);
     }
 
