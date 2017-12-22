@@ -6,11 +6,12 @@ U_FILES=src/read.c
 
 main: build
 
-build: build_daemon build_user
-
-build_daemon: $(D_FILES)
+build:
 	gcc -o $(D_OUT) -g $(D_FILES)
-
-build_user: $(U_FILES)
 	gcc -o $(U_OUT) -g $(U_FILES)
-	
+
+test:
+	valgrind --tool=memcheck --leak-check=yes bin/init
+
+debug:
+	gdb bin/init
