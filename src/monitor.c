@@ -68,11 +68,15 @@ int check_socket(int socket, FILE *stream)
     if (sock_connection < 0) {
         //connect error
     } else {
-        char stream_data[2];
-        fread(stream_data, 1, sizeof(stream_data), stream);
+        char stream_data[BUF_SIZE];
+        //note this should be the client's BUF_SIZE, as that value
+        //is the max that can be read... this can be larger than the # of bytes
+        //actually in the stream, as it won't block
+        fread(stream_data, 1, sizeof(stream_data), stream); //TODO: check return value
         if (write(sock_connection, stream_data, sizeof(stream_data)) < 0) {
             //write error
-        }
+        } 
+        // TODO: how do we handle there being more data to write than BUF_SIZE?
     }
 
     close(sock_connection);
