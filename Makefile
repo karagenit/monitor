@@ -11,15 +11,15 @@ build:
 	gcc -o $(U_OUT) -g $(U_FILES)
 
 test:
-	bin/init
+	$(D_OUT)
 	sleep 1
-	bin/read
+	$(U_OUT)
 
 check:
-	valgrind --tool=memcheck --leak-check=yes bin/init
+	valgrind --tool=memcheck --leak-check=yes $(D_OUT)
 
 debug:
-	gdb bin/init
+	gdb $(D_OUT) -ex "set follow-fork mode child"
 
 clean:
 	rm bin/*
