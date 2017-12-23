@@ -5,6 +5,7 @@ int monitor(char* dir, int delay)
     struct Monitor monitor;
     memset(monitor.path, 0, DIR_SIZE);
     strncpy(monitor.path, dir, DIR_SIZE - 1);
+    // TODO: return error if path was too long
 
     setup_socket(&monitor);
 
@@ -50,6 +51,7 @@ int setup_socket(struct Monitor *monitor)
 int setup_stream(struct Monitor *monitor)
 {
     monitor->stream = open_memstream(&(monitor->stream_buf), &(monitor->stream_size));
+    // TODO: validity check the memstream
 }
 
 int cleanup_socket(struct Monitor *monitor)
@@ -87,7 +89,6 @@ int check_directory(struct Monitor *monitor)
 
 int check_socket(struct Monitor *monitor)
 {
-    //check socket connection
     // TODO: non-blocking check
     int connection = accept(monitor->socket, 0, 0);
 
@@ -97,8 +98,11 @@ int check_socket(struct Monitor *monitor)
         char read_buf[BUF_SIZE];
         memset(read_buf, 0, BUF_SIZE);
 
-        fread(read_buf, 1, BUF_SIZE, monitor->stream); //TODO: check return value
-        if (write(connection, read_buf, BUF_SIZE) < 0) { //TODO: sizeof not BUF_S?
+        if (fread(read_buf, 1, BUF_SIZE, monitor->stream) < 0) {
+            //stream read error
+        }
+
+        if (write(connection, read_buf, BUF_SIZE) < 0) {
             //write error
         } 
         // TODO: how do we handle there being more data to write than BUF_SIZE?
