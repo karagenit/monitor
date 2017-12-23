@@ -37,5 +37,5 @@ int main(int argc, char* argv[])
     sleep(1);
 
     // Run main daemon process
-    monitor("/dev/", 60);
+    monitor(".", 60);
 }

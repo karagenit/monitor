@@ -69,7 +69,14 @@ int check_directory(struct Monitor *monitor)
     monitor->directory = opendir(monitor->path);
 
     if (monitor->directory) {
-        fprintf(monitor->stream, readdir(monitor->directory)->d_name);
+        while(1) {
+            struct dirent *entry = readdir(monitor->directory);
+            if(entry == NULL) {
+                break;
+            }
+            fprintf(monitor->stream, entry->d_name);
+            fprintf(monitor->stream, "\n");
+        }
         closedir(monitor->directory);
     } else {
         //directory error
