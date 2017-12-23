@@ -94,9 +94,11 @@ int check_socket(struct Monitor *monitor)
     if (connection < 0) {
         //connect error
     } else {
-        //TODO: zero the read buffer? or move it out of monitor?
-        fread(monitor->read_buf, 1, BUF_SIZE, monitor->stream); //TODO: check return value
-        if (write(connection, monitor->read_buf, BUF_SIZE) < 0) { //TODO: sizeof not BUF_S?
+        char read_buf[BUF_SIZE];
+        memset(read_buf, 0, BUF_SIZE);
+
+        fread(read_buf, 1, BUF_SIZE, monitor->stream); //TODO: check return value
+        if (write(connection, read_buf, BUF_SIZE) < 0) { //TODO: sizeof not BUF_S?
             //write error
         } 
         // TODO: how do we handle there being more data to write than BUF_SIZE?
