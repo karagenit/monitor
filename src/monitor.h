@@ -1,3 +1,12 @@
+/**
+ * @file    monitor.h
+ * @author  Caleb Smith
+ * @date    23 December 2017
+ *
+ * This file contains the code necessary for monitoring
+ * a target directory for changes.
+ */
+
 #ifndef MONITOR_H
 #define MONITOR_H
 
@@ -13,6 +22,11 @@
 
 #include "config.h"
 
+/**
+ * Contains all necessary configurations for monitoring
+ * a directory, including the in-memory Stream of changes
+ * and the socket (output) information.
+ */
 struct Monitor {
     char path[DIR_SIZE];
     char *stream_buf;
@@ -23,6 +37,13 @@ struct Monitor {
     int socket;
 };
 
+/**
+ * This function generates a Monitor config struct and
+ * begins monitoring a given filesystem directory for
+ * changes.
+ * @param dir   The directory to watch
+ * @param delay The time to wait (in seconds) between checks
+ */
 int monitor(char* dir, int delay);
 int setup_socket(struct Monitor *monitor);
 int setup_stream(struct Monitor *monitor);

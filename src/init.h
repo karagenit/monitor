@@ -1,3 +1,12 @@
+/**
+ * @file    init.h
+ * @author  Caleb Smith
+ * @date    23 December 2017
+ *
+ * This code is responsible for launching a daemon which
+ * monitors the '/dev/' directory.
+ */
+
 #ifndef INIT_H
 #define INIT_H
 

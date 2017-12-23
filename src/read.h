@@ -1,3 +1,12 @@
+/**
+ * @file read.h
+ * @author  Caleb Smith
+ * @date    23 December 2017
+ *
+ * This file responsible for connecting to the watchdog
+ * daemon's socket and reading directory changes.
+ */
+
 #ifndef READ_H
 #define READ_H
 
