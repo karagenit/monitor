@@ -24,13 +24,15 @@ int main(int argc, char *argv[])
     }
 
     bzero(buf, BUF_SIZE);
-    int bytes_read = read(sock, buf, BUF_SIZE);
+    int bytes_read = read(sock, buf, BUF_SIZE - 1);
 
     if (bytes_read < 0) {
         perror("reading from socket");
     } else if (bytes_read > 0) {
         printf(buf);
     }
+
+    // TODO: if more data to be read, read & print that too
 
     close(sock);
 }
