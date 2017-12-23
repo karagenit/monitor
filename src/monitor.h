@@ -33,7 +33,6 @@ struct Monitor {
     size_t stream_size;
     FILE *stream;
     DIR *directory;
-    char read_buf[BUF_SIZE];
     int socket;
 };
 
