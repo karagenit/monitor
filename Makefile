@@ -6,22 +6,23 @@ U_FILES=src/read.c
 
 main: build
 
-build:
+build: clean
 	gcc -o $(D_OUT) -g $(D_FILES)
 	gcc -o $(U_OUT) -g $(U_FILES)
 
-test:
+test: build
 	$(D_OUT)
 	sleep 1
 	$(U_OUT)
 
-check:
+check: build
 	valgrind --tool=memcheck --leak-check=yes $(D_OUT)
 
-debug:
-	gdb $(D_OUT) -ex "set follow-fork mode child"
+debug: build
+	gdb $(D_OUT) -ex "set follow-fork-mode child"
 
 clean:
+	rm -f socket
 	rm bin/*
 
 docs:
