@@ -23,3 +23,6 @@ debug:
 
 clean:
 	rm bin/*
+
+docs:
+	doxygen Doxyfile
