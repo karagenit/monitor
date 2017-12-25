@@ -4,17 +4,17 @@ int init_directory(struct Monitor *monitor)
 {
     memset(monitor->dir_list, 0, LIST_SIZE * DIR_SIZE); //todo SIZEOF(char)?
 
-    monitor->directory = opendir(monitor->path);
+    DIR *directory = opendir(monitor->path);
 
-    if (monitor->directory) {
+    if (directory) {
         for(int i = 0; i < LIST_SIZE; i++) {
-            struct dirent *entry = readdir(monitor->directory);
+            struct dirent *entry = readdir(directory);
             if(entry == NULL) {
                 break;
             }
             strncpy(monitor->dir_list[i], entry->d_name, DIR_SIZE - 1);
         }
-        closedir(monitor->directory);
+        closedir(directory);
     } else {
         //directory error
     }

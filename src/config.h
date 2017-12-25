@@ -9,8 +9,6 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include <dirent.h>
-
 #define BUF_SIZE 1024
 #define DIR_SIZE 32
 #define SOCKET_PATH "socket"
@@ -27,7 +25,6 @@ struct Monitor {
     char *stream_buf;
     size_t stream_size;
     FILE *stream;
-    DIR *directory;
     int socket;
     char dir_list[LIST_SIZE][DIR_SIZE];
 };
