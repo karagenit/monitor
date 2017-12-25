@@ -1,5 +1,5 @@
 D_OUT=bin/init
-D_FILES=src/init.c src/monitor.c
+D_FILES=src/init.c src/monitor.c src/directory.c
 
 U_OUT=bin/read
 U_FILES=src/read.c
@@ -23,7 +23,7 @@ debug: build
 
 clean:
 	rm -f socket
-	rm bin/*
+	rm -f bin/*
 
 docs:
 	doxygen Doxyfile

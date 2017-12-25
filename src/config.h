@@ -9,9 +9,27 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <dirent.h>
+
 #define BUF_SIZE 1024
 #define DIR_SIZE 32
 #define SOCKET_PATH "socket"
 #define DAEMON_PATH "."
+#define LIST_SIZE 1024
+
+/**
+ * Contains all necessary configurations for monitoring
+ * a directory, including the in-memory Stream of changes
+ * and the socket (output) information.
+ */
+struct Monitor {
+    char path[DIR_SIZE];
+    char *stream_buf;
+    size_t stream_size;
+    FILE *stream;
+    DIR *directory;
+    int socket;
+    char dir_list[LIST_SIZE][DIR_SIZE];
+};
 
 #endif

@@ -12,6 +12,8 @@ int monitor(char* dir, int delay)
     setup_stream(&monitor);
 
     while(1) {
+        init_directory(&monitor);
+
         check_directory(&monitor);
 
         check_socket(&monitor);
@@ -64,27 +66,6 @@ int cleanup_stream(struct Monitor *monitor)
 {
     fclose(monitor->stream);
     free(monitor->stream_buf);
-}
-
-int check_directory(struct Monitor *monitor)
-{
-    monitor->directory = opendir(monitor->path);
-
-    if (monitor->directory) {
-        while(1) {
-            struct dirent *entry = readdir(monitor->directory);
-            if(entry == NULL) {
-                break;
-            }
-            fprintf(monitor->stream, entry->d_name);
-            fprintf(monitor->stream, "\n");
-        }
-        closedir(monitor->directory);
-    } else {
-        //directory error
-    }
-
-    fflush(monitor->stream);
 }
 
 int check_socket(struct Monitor *monitor)

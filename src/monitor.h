@@ -21,20 +21,7 @@
 #include <sys/stat.h>
 
 #include "config.h"
-
-/**
- * Contains all necessary configurations for monitoring
- * a directory, including the in-memory Stream of changes
- * and the socket (output) information.
- */
-struct Monitor {
-    char path[DIR_SIZE];
-    char *stream_buf;
-    size_t stream_size;
-    FILE *stream;
-    DIR *directory;
-    int socket;
-};
+#include "directory.h"
 
 /**
  * This function generates a Monitor config struct and
@@ -48,7 +35,6 @@ int setup_socket(struct Monitor *monitor);
 int setup_stream(struct Monitor *monitor);
 int cleanup_stream(struct Monitor *monitor);
 int cleanup_socket(struct Monitor *monitor);
-int check_directory(struct Monitor *monitor);
 int check_socket(struct Monitor *monitor);
 
 #endif
