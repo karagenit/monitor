@@ -26,7 +26,7 @@ int check_directory(struct Monitor *monitor)
     memset(found, 0, LIST_SIZE);
 
     for (int i = 0; i < LIST_SIZE; i++) {
-        if (monitor->dir_list[i]) {
+        if (monitor->dir_list[i][0]) {
             fprintf(monitor->stream, monitor->dir_list[i]);
             fprintf(monitor->stream, "\n");
         }
