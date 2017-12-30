@@ -11,15 +11,16 @@ build: clean
 	gcc -o $(U_OUT) -g $(U_FILES)
 
 test: build
-	$(D_OUT)
-	sleep 1
-	./test/create.sh
-	sleep 2
-	$(U_OUT)
-	sleep 1
-	./test/remove.sh
-	sleep 2
-	$(U_OUT)
+	@echo "Running Test\n-----------"
+	@$(D_OUT)
+	@sleep 1
+	@./test/create.sh
+	@sleep 2
+	@$(U_OUT)
+	@sleep 1
+	@./test/remove.sh
+	@sleep 2
+	@$(U_OUT)
 
 check: build
 	valgrind --tool=memcheck --leak-check=yes $(D_OUT)
