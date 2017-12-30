@@ -3,7 +3,7 @@
 int main(int argc, char *argv[])
 {
     if (argc == 4 && !strcmp(argv[1], "init")) {
-        lsdev_init(argv[2], 1); //TODO: convert argv[3] to int to be passed here
+        lsdev_init(argv[2], strtol(argv[3], NULL, 10));
     } else if (argc == 3 && !strcmp(argv[1], "read")) {
         lsdev_read(argv[2]);
     } else {
