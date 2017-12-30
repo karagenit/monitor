@@ -1,5 +1,6 @@
 EXE=bin/monitor
 FILES=src/init.c src/monitor.c src/directory.c src/read.c src/main.c
+INSTALL=/usr/local/bin/monitor
 
 main: build
 
@@ -30,3 +31,9 @@ clean:
 
 docs:
 	doxygen Doxyfile
+
+release: clean
+	gcc -o $(EXE) -O2 $(FILES)
+
+install: release
+	cp $(EXE) $(INSTALL)

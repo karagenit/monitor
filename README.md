@@ -4,7 +4,7 @@ Track & List Linux Filesystem Changes
 
 ## Installation
 
-> Coming soon to your makefile!
+Simply run `make install` to compile & add the binary to your path.
 
 ## Setup
 
