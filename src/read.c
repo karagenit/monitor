@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    bzero(buf, BUF_SIZE);
+    memset(buf, 0, BUF_SIZE);
     int bytes_read = read(sock, buf, BUF_SIZE - 1);
 
     if (bytes_read < 0) {
