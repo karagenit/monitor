@@ -31,7 +31,7 @@
  * @param dir   The directory to watch
  * @param delay The time to wait (in seconds) between checks
  */
-int monitor(char* dir, int delay);
+int monitor(int delay);
 int setup_socket(struct Monitor *monitor);
 int setup_stream(struct Monitor *monitor);
 int cleanup_stream(struct Monitor *monitor);

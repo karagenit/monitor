@@ -1,11 +1,8 @@
 #include "monitor.h"
 
-int monitor(char* dir, int delay)
+int monitor(int delay)
 {
     struct Monitor monitor;
-    memset(monitor.path, 0, DIR_SIZE);
-    strncpy(monitor.path, dir, DIR_SIZE - 1);
-    // TODO: return error if path was too long
 
     setup_socket(&monitor);
 

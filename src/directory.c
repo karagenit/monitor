@@ -4,7 +4,7 @@ int init_directory(struct Monitor *monitor)
 {
     memset(monitor->dir_list, 0, LIST_SIZE * DIR_SIZE); //todo SIZEOF(char)?
 
-    DIR *directory = opendir(monitor->path);
+    DIR *directory = opendir(".");
 
     if (!directory) {
         return -1;
@@ -26,7 +26,7 @@ int check_directory(struct Monitor *monitor)
     char found[LIST_SIZE];
     memset(found, 0, LIST_SIZE);
 
-    DIR *directory = opendir(monitor->path);
+    DIR *directory = opendir(".");
 
     if (!directory) {
         return -1;

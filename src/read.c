@@ -12,9 +12,10 @@ int lsdev_read(char *dir)
         exit(1);
     }
 
+    chdir(dir);
+
     server.sun_family = AF_UNIX;
-    strcpy(server.sun_path, SOCKET_PATH); //TODO use dir
-    //strcat(server.sun_path, SOCKET_PATH); //TODO check for / in dir, eg /dev -> /dev/socket
+    strcpy(server.sun_path, SOCKET_PATH);
 
     int connect_err = connect(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
 

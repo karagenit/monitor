@@ -12,11 +12,11 @@ test: build
 	@sleep 1
 	@./test/create.sh
 	@sleep 2
-	@$(EXE) read ./test/
+	@$(EXE) read ./test
 	@sleep 1
 	@./test/remove.sh
 	@sleep 2
-	@$(EXE) read ./test/
+	@$(EXE) read ./test
 
 check: build
 	valgrind --tool=memcheck --leak-check=yes $(EXE)

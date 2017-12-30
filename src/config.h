@@ -21,7 +21,6 @@
  * and the socket (output) information.
  */
 struct Monitor {
-    char path[DIR_SIZE];
     char *stream_buf;
     size_t stream_size;
     FILE *stream;

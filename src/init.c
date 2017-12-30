@@ -22,8 +22,7 @@ int lsdev_init(char *dir, int delay)
 
     //unmask the file mode
     umask(0);
-    //chdir(dir);
-    //TODO: chdir to the dir to be monitored?
+    chdir(dir);
 
     sid = setsid();
     if(sid < 0)
@@ -38,5 +37,5 @@ int lsdev_init(char *dir, int delay)
     sleep(1);
 
     // Run main daemon process
-    monitor("./test", delay);
+    monitor(delay);
 }
