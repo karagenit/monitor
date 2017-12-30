@@ -1,13 +1,13 @@
 /**
- * @file    lsdev.h
+ * @file    main.h
  * @author  Caleb Smith
  * @date    29 December 2017
  *
  * The core application responsible for launching init/read routines.
  */
 
-#ifndef LSDEV_H
-#define LSDEV_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdio.h>
 #include <stdlib.h>

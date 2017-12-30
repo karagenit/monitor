@@ -4,7 +4,7 @@
  * @date    23 December 2017
  *
  * This code is responsible for launching a daemon which
- * monitors the '/dev/' directory.
+ * monitors the given directory.
  */
 
 #ifndef INIT_H
@@ -25,6 +25,6 @@
  * @param dir   The directory to watch.
  * @param delay The time to wait between directory checks.
  */
-int lsdev_init(char *dir, int delay);
+int monitor_init(char *dir, int delay);
 
 #endif

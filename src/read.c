@@ -1,6 +1,6 @@
 #include "read.h"
 
-int lsdev_read(char *dir)
+int monitor_read(char *dir)
 {
     int sock;
     struct sockaddr_un server;

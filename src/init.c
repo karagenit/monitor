@@ -1,6 +1,6 @@
 #include "init.h"
 
-int lsdev_init(char *dir, int delay)
+int monitor_init(char *dir, int delay)
 {
     pid_t process_id = 0;
     pid_t sid = 0;

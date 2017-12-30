@@ -23,6 +23,6 @@
  * Reads from the socket connection for filesystem changes.
  * @param dir   The directory to check for changes on.
  */
-int lsdev_read(char *dir);
+int monitor_read(char *dir);
 
 #endif
