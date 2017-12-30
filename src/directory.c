@@ -39,7 +39,7 @@ int check_directory(struct Monitor *monitor)
             break;
         }
 
-        if (str_in_arr(entry->d_name, monitor->dir_list)) {
+        if (str_in_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list)) {
             //mark good
         } else {
             //add listing
@@ -64,7 +64,7 @@ int check_directory(struct Monitor *monitor)
     //is to grow the dir_list with realloc calls (requires significant reworking)
 }
 
-int str_in_arr(char str[], char arr[][DIR_SIZE])
+int str_in_arr(int arr_size, int str_size, char *str, char arr[arr_size][str_size])
 {
     return 0;
 }
