@@ -39,7 +39,7 @@ int check_directory(struct Monitor *monitor)
             break;
         }
 
-        if (0 /*listing_exists(entry->d_name)*/) {
+        if (str_in_arr(entry->d_name, monitor->dir_list)) {
             //mark good
         } else {
             //add listing
@@ -62,4 +62,9 @@ int check_directory(struct Monitor *monitor)
     //weird bug: if there are 1025 items in dir, the last will constantly
     //be seen as a "new" dir (as it can't be stored in the list) - easiest fix
     //is to grow the dir_list with realloc calls (requires significant reworking)
+}
+
+int str_in_arr(char str[], char arr[][DIR_SIZE])
+{
+    return 0;
 }
