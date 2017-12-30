@@ -54,9 +54,10 @@ int check_directory(struct Monitor *monitor)
     }
 
     for (int i = 0; i < LIST_SIZE; i++) {
-        //if not good
-        //print stream -
-        //remove from list
+        if ((!found[i]) && monitor->dir_list[i][0] != 0) {
+            fprintf(monitor->stream, "-%s\n", monitor->dir_list[i]);
+            memset(monitor->dir_list[i], 0, DIR_SIZE);
+        }
     }
 
     fflush(monitor->stream);
