@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include "monitor.h"
 
 int monitor(char* dir, int delay)
@@ -11,17 +13,16 @@ int monitor(char* dir, int delay)
 
     setup_stream(&monitor);
 
-    while(1) {
-        init_directory(&monitor);
+    init_directory(&monitor);
 
+    //TODO: should loop forever, only ending on SIGTERM etc? need to handle those properly
+    for(int i = 0; i < 10; i++) {
         check_directory(&monitor);
 
+        //TODO: should check continually, only call check_directory with sleep()
         check_socket(&monitor);
 
-        // TODO: don't hang main thread like this, instead check constantly for socket requests
-        //sleep(delay);
-
-        break; //temporary
+        sleep(delay);
     }
 
     cleanup_stream(&monitor);
@@ -71,7 +72,7 @@ int cleanup_stream(struct Monitor *monitor)
 int check_socket(struct Monitor *monitor)
 {
     // TODO: non-blocking check
-    int connection = accept(monitor->socket, 0, 0);
+    int connection = accept4(monitor->socket, 0, 0, 0 | SOCK_NONBLOCK);
 
     if (connection < 0) {
         //connect error
