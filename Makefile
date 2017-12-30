@@ -8,15 +8,15 @@ build: clean
 
 test: build
 	@echo "Running Test\n-----------"
-	@$(EXE) init
+	@$(EXE) init ./test 1
 	@sleep 1
 	@./test/create.sh
 	@sleep 2
-	@$(EXE) read
+	@$(EXE) read ./test/
 	@sleep 1
 	@./test/remove.sh
 	@sleep 2
-	@$(EXE) read
+	@$(EXE) read ./test/
 
 check: build
 	valgrind --tool=memcheck --leak-check=yes $(EXE)

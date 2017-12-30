@@ -19,6 +19,6 @@
 
 #include "config.h"
 
-int lsdev_read();
+int lsdev_read(char *dir);
 
 #endif

@@ -1,7 +1,6 @@
 #include "read.h"
 
-// TODO: take args for dir to read from?
-int lsdev_read()
+int lsdev_read(char *dir)
 {
     int sock;
     struct sockaddr_un server;
@@ -14,7 +13,8 @@ int lsdev_read()
     }
 
     server.sun_family = AF_UNIX;
-    strcpy(server.sun_path, SOCKET_PATH);
+    strcpy(server.sun_path, SOCKET_PATH); //TODO use dir
+    //strcat(server.sun_path, SOCKET_PATH); //TODO check for / in dir, eg /dev -> /dev/socket
 
     int connect_err = connect(sock, (struct sockaddr *) &server, sizeof(struct sockaddr_un));
 

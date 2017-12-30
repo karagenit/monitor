@@ -1,7 +1,6 @@
 #include "init.h"
 
-// TODO: take args for dir & delay?
-int lsdev_init()
+int lsdev_init(char *dir, int delay)
 {
     pid_t process_id = 0;
     pid_t sid = 0;
@@ -23,8 +22,8 @@ int lsdev_init()
 
     //unmask the file mode
     umask(0);
-    //chdir("/"); 
-    // TODO: set dir to the directory to be watched?
+    //chdir(dir);
+    //TODO: chdir to the dir to be monitored?
 
     sid = setsid();
     if(sid < 0)
@@ -39,5 +38,5 @@ int lsdev_init()
     sleep(1);
 
     // Run main daemon process
-    monitor("./test", 1);
+    monitor("./test", delay);
 }

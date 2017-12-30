@@ -19,6 +19,6 @@
 
 #include "monitor.h"
 
-int lsdev_init();
+int lsdev_init(char *dir, int delay);
 
 #endif

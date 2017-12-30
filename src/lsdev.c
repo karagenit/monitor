@@ -2,16 +2,10 @@
 
 int main(int argc, char *argv[])
 {
-    // TODO: pass remaining argv to init or read
-
-    if (argc < 2) {
-        help();
-    }
-
-    if (!strcmp(argv[1], "init")) {
-        lsdev_init();
-    } else if (!strcmp(argv[1], "read")) {
-        lsdev_read();
+    if (argc == 4 && !strcmp(argv[1], "init")) {
+        lsdev_init(argv[2], 1); //TODO: convert argv[3] to int to be passed here
+    } else if (argc == 3 && !strcmp(argv[1], "read")) {
+        lsdev_read(argv[2]);
     } else {
         help();
     }
@@ -19,5 +13,10 @@ int main(int argc, char *argv[])
 
 int help()
 {
-    printf("Usage: lsdev COMMAND\nWhere COMMAND is one of:\n\t'init'\tStart the daemon.\n\t'read'\tPrint the directory changes.");
+    printf("Usage: lsdev COMMAND DIRECTORY <DELAY>\n");
+    printf("Where COMMAND is one of:\n");
+    printf("\t'init'\tStart the daemon.\n");
+    printf("\t'read'\tPrint the directory changes.\n");
+    printf("Where DIRECTORY is the directory to monitor,\n");
+    printf("and where DELAY is the time in between directory checks.\n");
 } 
