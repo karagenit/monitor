@@ -15,6 +15,7 @@
 
 int init_directory(struct Monitor *monitor);
 int check_directory(struct Monitor *monitor);
-int str_in_arr(int arr_size, int str_size, char str[str_size], char arr[arr_size][str_size]);
+int add_str_to_arr(int arr_size, int str_size, char *str, char arr[arr_size][str_size]);
+int str_in_arr(int arr_size, int str_size, char *str, char arr[arr_size][str_size]);
 
 #endif

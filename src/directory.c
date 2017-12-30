@@ -43,6 +43,7 @@ int check_directory(struct Monitor *monitor)
             //mark good
         } else {
             //add listing
+            add_str_to_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list);
             //print stream +
             fprintf(monitor->stream, "+");
             fprintf(monitor->stream, entry->d_name);
@@ -62,6 +63,17 @@ int check_directory(struct Monitor *monitor)
     //weird bug: if there are 1025 items in dir, the last will constantly
     //be seen as a "new" dir (as it can't be stored in the list) - easiest fix
     //is to grow the dir_list with realloc calls (requires significant reworking)
+}
+
+int add_str_to_arr(int arr_size, int str_size, char *str, char arr[arr_size][str_size])
+{
+    for (int i = 0; i < arr_size; i++) {
+        if (arr[i][0] == 0) {
+            strncpy(arr[i], str, str_size);
+            return 0;
+        }
+    }
+    return -1; //couldn't copy, no empty slot available
 }
 
 /*
