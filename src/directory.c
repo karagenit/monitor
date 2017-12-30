@@ -64,7 +64,17 @@ int check_directory(struct Monitor *monitor)
     //is to grow the dir_list with realloc calls (requires significant reworking)
 }
 
+/*
+ * Not sure if entry->d_name will always be null-terminated, but we have to hope...
+ * We know each string in arr[] will be null terminated, but we limit the comparison
+ * to str_size anyways to be safe.
+ */
 int str_in_arr(int arr_size, int str_size, char *str, char arr[arr_size][str_size])
 {
+    for (int i = 0; i < arr_size; i++) {
+        if (!strncmp(str, arr[i], str_size)) {
+            return 1;
+        }
+    }
     return 0;
 }
