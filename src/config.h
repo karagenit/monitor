@@ -12,7 +12,6 @@
 #define BUF_SIZE 1024
 #define DIR_SIZE 32
 #define SOCKET_PATH "socket"
-#define DAEMON_PATH "."
 #define LIST_SIZE 1024
 
 /**
