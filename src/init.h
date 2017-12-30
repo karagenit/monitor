@@ -19,6 +19,12 @@
 
 #include "monitor.h"
 
+/**
+ * Initializes the watchdog daemon, including forking to a child
+ * process and calling monitor().
+ * @param dir   The directory to watch.
+ * @param delay The time to wait between directory checks.
+ */
 int lsdev_init(char *dir, int delay);
 
 #endif

@@ -9,9 +9,24 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+/**
+ * The size of buffers used for sending/receiving data via sockets.
+ */
 #define BUF_SIZE 1024
+
+/**
+ * The max size of each file name
+ */
 #define DIR_SIZE 32
+
+/**
+ * The file name of the socket
+ */
 #define SOCKET_PATH "socket"
+
+/**
+ * The maximum number of file names to track
+ */
 #define LIST_SIZE 1024
 
 /**

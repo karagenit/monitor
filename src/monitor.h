@@ -25,17 +25,37 @@
 #include "directory.h"
 
 /**
- * This function generates a Monitor config struct and
- * begins monitoring a given filesystem directory for
+ * Generates a Monitor config struct and begins
+ * monitoring a given filesystem directory for
  * changes.
- * @param dir   The directory to watch
  * @param delay The time to wait (in seconds) between checks
  */
 int monitor(int delay);
+
+/**
+ * Sets up the socket connection.
+ */
 int setup_socket(struct Monitor *monitor);
+
+/**
+ * Sets up the internal memory stream for writing output.
+ */
 int setup_stream(struct Monitor *monitor);
+
+/**
+ * Cleans up the internal memory stream.
+ */
 int cleanup_stream(struct Monitor *monitor);
+
+/**
+ * Closes the socket connection.
+ */
 int cleanup_socket(struct Monitor *monitor);
+
+/**
+ * Checks if connections are waiting on the socket.
+ * Does not block.
+ */
 int check_socket(struct Monitor *monitor);
 
 #endif
