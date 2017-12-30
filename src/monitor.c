@@ -1,5 +1,3 @@
-#define _GNU_SOURCE
-
 #include "monitor.h"
 
 int monitor(char* dir, int delay)
@@ -46,7 +44,21 @@ int setup_socket(struct Monitor *monitor)
         exit(1);
     }
 
+    //TODO check errors?
     listen(sock, 1); //listen for connections, allow max 1 to be queued
+
+    //sets socket as non-blocking
+    int opts = fcntl(sock, F_GETFL);
+
+    if(opts < 0) {
+        exit(1);
+    }
+
+    opts = (opts | O_NONBLOCK);
+
+    if(fcntl(sock, F_SETFL, opts) < 0) {
+        exit(1);
+    }
 
     monitor->socket = sock;
 }
@@ -72,7 +84,7 @@ int cleanup_stream(struct Monitor *monitor)
 int check_socket(struct Monitor *monitor)
 {
     // TODO: non-blocking check
-    int connection = accept4(monitor->socket, 0, 0, 0 | SOCK_NONBLOCK);
+    int connection = accept(monitor->socket, 0, 0);
 
     if (connection < 0) {
         //connect error

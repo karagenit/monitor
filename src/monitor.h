@@ -19,6 +19,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <sys/stat.h>
+#include <fcntl.h>
 
 #include "config.h"
 #include "directory.h"
