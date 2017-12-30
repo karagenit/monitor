@@ -1,5 +1,5 @@
-EXE=bin/lsdev
-FILES=src/init.c src/monitor.c src/directory.c src/read.c src/lsdev.c
+EXE=bin/monitor
+FILES=src/init.c src/monitor.c src/directory.c src/read.c src/main.c
 
 main: build
 
