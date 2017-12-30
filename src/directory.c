@@ -45,9 +45,7 @@ int check_directory(struct Monitor *monitor)
             //add listing
             add_str_to_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list);
             //print stream +
-            fprintf(monitor->stream, "+");
-            fprintf(monitor->stream, entry->d_name);
-            fprintf(monitor->stream, "\n");
+            fprintf(monitor->stream, "+%s\n", entry->d_name);
             //mark good
         }
     }
