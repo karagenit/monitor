@@ -1,6 +1,7 @@
 #include "read.h"
 
-int main(int argc, char *argv[])
+// TODO: take args for dir to read from?
+int lsdev_read()
 {
     int sock;
     struct sockaddr_un server;

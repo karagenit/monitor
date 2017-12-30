@@ -1,6 +1,7 @@
 #include "init.h"
 
-int main(int argc, char* argv[])
+// TODO: take args for dir & delay?
+int lsdev_init()
 {
     pid_t process_id = 0;
     pid_t sid = 0;
@@ -22,7 +23,8 @@ int main(int argc, char* argv[])
 
     //unmask the file mode
     umask(0);
-    //chdir("/"); // TODO: figure out the proper working directory
+    //chdir("/"); 
+    // TODO: set dir to the directory to be watched?
 
     sid = setsid();
     if(sid < 0)

@@ -1,32 +1,28 @@
-D_OUT=bin/init
-D_FILES=src/init.c src/monitor.c src/directory.c
-
-U_OUT=bin/read
-U_FILES=src/read.c
+EXE=bin/lsdev
+FILES=src/init.c src/monitor.c src/directory.c src/read.c src/lsdev.c
 
 main: build
 
 build: clean
-	gcc -o $(D_OUT) -g $(D_FILES)
-	gcc -o $(U_OUT) -g $(U_FILES)
+	gcc -o $(EXE) -g $(FILES)
 
 test: build
 	@echo "Running Test\n-----------"
-	@$(D_OUT)
+	@$(EXE) init
 	@sleep 1
 	@./test/create.sh
 	@sleep 2
-	@$(U_OUT)
+	@$(EXE) read
 	@sleep 1
 	@./test/remove.sh
 	@sleep 2
-	@$(U_OUT)
+	@$(EXE) read
 
 check: build
-	valgrind --tool=memcheck --leak-check=yes $(D_OUT)
+	valgrind --tool=memcheck --leak-check=yes $(EXE)
 
 debug: build
-	gdb $(D_OUT) -ex "set follow-fork-mode child"
+	gdb $(EXE) -ex "set follow-fork-mode child"
 
 clean:
 	rm -f socket

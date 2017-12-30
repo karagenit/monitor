@@ -19,6 +19,6 @@
 
 #include "monitor.h"
 
-int main(int argc, char* argv[]);
+int lsdev_init();
 
 #endif
