@@ -39,14 +39,17 @@ int check_directory(struct Monitor *monitor)
             break;
         }
 
-        if (str_in_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list)) {
-            //mark good
-        } else {
-            //add listing
-            add_str_to_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list);
-            //print stream +
+        int index = str_in_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list);
+
+        // if it doesn't already exist, lets add it
+        if (index < 0) {
+            index = add_str_to_arr(LIST_SIZE, DIR_SIZE, entry->d_name, monitor->dir_list);
             fprintf(monitor->stream, "+%s\n", entry->d_name);
-            //mark good
+        }
+
+        // if it exists or was successfully added, set it as found
+        if (index >= 0) {
+            found[index] = 1;
         }
     }
 
@@ -68,7 +71,7 @@ int add_str_to_arr(int arr_size, int str_size, char *str, char arr[arr_size][str
     for (int i = 0; i < arr_size; i++) {
         if (arr[i][0] == 0) {
             strncpy(arr[i], str, str_size);
-            return 0;
+            return i;
         }
     }
     return -1; //couldn't copy, no empty slot available
@@ -83,8 +86,8 @@ int str_in_arr(int arr_size, int str_size, char *str, char arr[arr_size][str_siz
 {
     for (int i = 0; i < arr_size; i++) {
         if (!strncmp(str, arr[i], str_size)) {
-            return 1;
+            return i;
         }
     }
-    return 0;
+    return -1;
 }
