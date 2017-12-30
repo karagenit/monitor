@@ -35,10 +35,26 @@
  * and the socket (output) information.
  */
 struct Monitor {
+    /**
+     * The memory buffer to hold the internal memory stream.
+     */
     char *stream_buf;
+    /**
+     * The size of the in-memory stream.
+     * TODO: is this necessary? Isn't it just BUF_SIZE?
+     */
     size_t stream_size;
+    /**
+     * The file pointer to the memory stream.
+     */
     FILE *stream;
+    /**
+     * The file socket connection for writing output to clients.
+     */
     int socket;
+    /**
+     * The list of tracked files in the directory.
+     */
     char dir_list[LIST_SIZE][DIR_SIZE];
 };
 
