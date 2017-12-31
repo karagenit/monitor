@@ -26,7 +26,7 @@ debug: build
 	gdb $(EXE) -ex "set follow-fork-mode child"
 
 clean:
-	rm -f socket
+	rm -f test/socket
 	rm -f bin/*
 
 docs:
