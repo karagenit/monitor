@@ -22,6 +22,8 @@ int monitor(int delay)
         sleep(delay);
     }
 
+    sleep(2);
+
     cleanup_stream(&monitor);
 
     cleanup_socket(&monitor);
@@ -100,6 +102,16 @@ int connect_socket(int connection, struct Monitor *monitor)
     char read_buf[BUF_SIZE];
     memset(read_buf, 0, BUF_SIZE);
 
+    int bytes_read = read(connection, read_buf, BUF_SIZE - 1);
+
+    if (bytes_read < 0) {
+        //apparently this is normal for no data, so don't return yet
+    } else if (bytes_read > 0) {
+        return 1;
+    }
+
+    memset(read_buf, 0, BUF_SIZE);
+
     if (fread(read_buf, 1, BUF_SIZE, monitor->stream) < 0) {
         return -1;
     }
@@ -109,16 +121,4 @@ int connect_socket(int connection, struct Monitor *monitor)
     }
 
     // TODO: how do we handle there being more data to write than BUF_SIZE?
-
-    memset(read_buf, 0, BUF_SIZE);
-
-    int bytes_read = read(connection, read_buf, BUF_SIZE - 1);
-
-    if (bytes_read < 0) {
-        return -1;
-    } else if (bytes_read > 0 && read_buf[0] == '1') {
-        return 1;
-    }
-
-    return 0;
 }

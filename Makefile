@@ -18,6 +18,7 @@ test: build
 	@./test/remove.sh
 	@sleep 2
 	@$(EXE) read ./test
+	@sleep 1
 	@$(EXE) kill ./test
 
 check: build
