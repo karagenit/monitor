@@ -18,6 +18,7 @@ test: build
 	@./test/remove.sh
 	@sleep 2
 	@$(EXE) read ./test
+	@$(EXE) kill ./test
 
 check: build
 	valgrind --tool=memcheck --leak-check=yes $(EXE)
