@@ -58,4 +58,6 @@ int cleanup_socket(struct Monitor *monitor);
  */
 int check_socket(struct Monitor *monitor);
 
+int connect_socket(int connection, struct Monitor *monitor);
+
 #endif

@@ -11,11 +11,13 @@ int monitor(int delay)
     init_directory(&monitor);
 
     //TODO: should loop forever, only ending on SIGTERM etc? need to handle those properly
-    for(int i = 0; i < 10; i++) {
+    while (1) {
         check_directory(&monitor);
 
         //TODO: should check continually, only call check_directory with sleep()
-        check_socket(&monitor);
+        if (check_socket(&monitor) == 1) {
+            break;
+        }
 
         sleep(delay);
     }
@@ -30,7 +32,7 @@ int setup_socket(struct Monitor *monitor)
     int sock = socket(AF_UNIX, SOCK_STREAM, 0); //Create unix socket, type stream, no params
 
     if (sock < 0) {
-        exit(1);
+        return -1;
     }
 
     struct sockaddr_un sock_addr;
@@ -38,7 +40,7 @@ int setup_socket(struct Monitor *monitor)
     strcpy(sock_addr.sun_path, SOCKET_PATH);
 
     if (bind(sock, (struct sockaddr *) &sock_addr, sizeof(struct sockaddr_un)) < 0) {
-        exit(1);
+        return -1;
     }
 
     //TODO check errors?
@@ -48,13 +50,13 @@ int setup_socket(struct Monitor *monitor)
     int opts = fcntl(sock, F_GETFL);
 
     if(opts < 0) {
-        exit(1);
+        return -1;
     }
 
     opts = (opts | O_NONBLOCK);
 
     if(fcntl(sock, F_SETFL, opts) < 0) {
-        exit(1);
+        return -1;
     }
 
     monitor->socket = sock;
@@ -80,24 +82,43 @@ int cleanup_stream(struct Monitor *monitor)
 
 int check_socket(struct Monitor *monitor)
 {
-    // TODO: non-blocking check
     int connection = accept(monitor->socket, 0, 0);
 
     if (connection < 0) {
-        //connect error
-    } else {
-        char read_buf[BUF_SIZE];
-        memset(read_buf, 0, BUF_SIZE);
-
-        if (fread(read_buf, 1, BUF_SIZE, monitor->stream) < 0) {
-            //stream read error
-        }
-
-        if (write(connection, read_buf, BUF_SIZE) < 0) {
-            //write error
-        } 
-        // TODO: how do we handle there being more data to write than BUF_SIZE?
+        return -1;
     }
 
+    int status = connect_socket(connection, monitor);
+
     close(connection);
+
+    return status;
+}
+
+int connect_socket(int connection, struct Monitor *monitor)
+{
+    char read_buf[BUF_SIZE];
+    memset(read_buf, 0, BUF_SIZE);
+
+    if (fread(read_buf, 1, BUF_SIZE, monitor->stream) < 0) {
+        return -1;
+    }
+
+    if (write(connection, read_buf, BUF_SIZE) < 0) {
+        return -1;
+    }
+
+    // TODO: how do we handle there being more data to write than BUF_SIZE?
+
+    memset(read_buf, 0, BUF_SIZE);
+
+    int bytes_read = read(connection, read_buf, BUF_SIZE - 1);
+
+    if (bytes_read < 0) {
+        return -1;
+    } else if (bytes_read > 0 && read_buf[0] == '1') {
+        return 1;
+    }
+
+    return 0;
 }
