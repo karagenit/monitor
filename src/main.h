@@ -25,4 +25,6 @@ int main(int argc, char *argv[]);
  */
 int help();
 
+int monitor_kill(char *dir);
+
 #endif
